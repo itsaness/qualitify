@@ -1,0 +1,129 @@
+:root {
+  --color-primary:                   #a9c7ff;
+  --color-primary-container:         #3c90ff;
+  --color-primary-fixed:             #d6e3ff;
+  --color-primary-fixed-dim:         #a9c7ff;
+  --color-on-primary:                #003063;
+  --color-on-primary-container:      #002957;
+  --color-on-primary-fixed:          #001b3d;
+  --color-on-primary-fixed-variant:  #00468c;
+  --color-inverse-primary:           #005db7;
+
+  --color-secondary:                 #c8c6c9;
+  --color-secondary-container:       #47464a;
+  --color-secondary-fixed:           #e4e1e5;
+  --color-secondary-fixed-dim:       #c8c6c9;
+  --color-on-secondary:              #303033;
+  --color-on-secondary-container:    #b6b4b8;
+  --color-on-secondary-fixed:        #1b1b1e;
+  --color-on-secondary-fixed-variant:#47464a;
+
+  --color-tertiary:                  #4ae176;
+  --color-tertiary-container:        #00a74b;
+  --color-tertiary-fixed:            #6bff8f;
+  --color-tertiary-fixed-dim:        #4ae176;
+  --color-on-tertiary:               #003915;
+  --color-on-tertiary-container:     #003111;
+  --color-on-tertiary-fixed:         #002109;
+  --color-on-tertiary-fixed-variant: #005321;
+
+  --color-error:                     #ffb4ab;
+  --color-error-container:           #93000a;
+  --color-on-error:                  #690005;
+  --color-on-error-container:        #ffdad6;
+
+  --color-surface:                   #111318;
+  --color-surface-dim:               #111318;
+  --color-surface-bright:            #37393f;
+  --color-surface-variant:           #33353a;
+  --color-surface-container-lowest:  #0c0e13;
+  --color-surface-container-low:     #1a1b21;
+  --color-surface-container:         #1e2025;
+  --color-surface-container-high:    #282a2f;
+  --color-surface-container-highest: #33353a;
+  --color-surface-tint:              #a9c7ff;
+
+  --color-on-surface:                #e2e2e9;
+  --color-on-surface-variant:        #c0c6d6;
+  --color-on-background:             #e2e2e9;
+  --color-background:                #111318;
+  --color-outline:                   #8b91a0;
+  --color-outline-variant:           #414754;
+  --color-inverse-surface:           #e2e2e9;
+  --color-inverse-on-surface:        #2e3036;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-xs:  0.125rem;
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
+  --radius-full:999px;
+
+  --sp-xs:  0.25rem;
+  --sp-sm:  0.5rem;
+  --sp-md:  1rem;
+  --sp-lg:  1.5rem;
+  --sp-xl:  2rem;
+
+  --header-h: 64px;
+  --nav-h:    64px;
+}
+
+/* ─── Global Reset ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body::-webkit-scrollbar { display: none; }
+body { scrollbar-width: none; }
+
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+}
+
+a    { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+input, textarea { font-family: inherit; color: inherit; border: none; outline: none; }
+img  { display: block; }
+pre, code { font-family: var(--font-mono); }
+
+/* ─── Utility classes (used across pages) ─────────────────────────── */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  user-select: none;
+}
