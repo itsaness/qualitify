@@ -15,11 +15,11 @@ export async function webhookTokenController(req,res){
       }
       let sellerId = sellerRes.rows[0].id;
       let exist = await pool.query("SELECT webhook_token FROM seller_integrations WHERE seller_id=$1 AND provider_name=$2",[sellerId,provider]);
-      if(exist.rows[0].webhook_token){
+      if(exist.rows.length>0 && exist.rows[0].webhook_token){
         return res.status(400).json({message:`Webhook token already exist ${exist.rows[0].webhook_token}`});
       }
       let webhook_token = crypto.randomBytes(16).toString("hex");
-      await pool.query("INSERT INTO seller_integrations (seller_id,provider_name,webhook_token) VALUES ($1,$2,$3) ON CONFLICT (seller_id,provider_name) DO UPDATE SET webhook_token=EXCLUDED.webhook_token",[sellerId,provider_name,webhook_token])
+      await pool.query("INSERT INTO seller_integrations (seller_id,provider_name,webhook_token) VALUES ($1,$2,$3) ON CONFLICT (seller_id,provider_name) DO UPDATE SET webhook_token=EXCLUDED.webhook_token",[sellerId,provider,webhook_token])
       return res.status(200).json({message:"Webhook token created.",webhook_token:`${webhook_token}`});
     }catch(err){
 return res.status(500).json({message:"Internal server error"});    }
