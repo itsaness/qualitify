@@ -10,7 +10,7 @@ export const auth = betterAuth({
     baseURL:process.env.BETTER_AUTH_URL,
     database:pool,
     type:"postgres",
-    trustedOrigins:["http://localhost:5173",process.env.BETTER_AUTH_URL],
+    trustedOrigins:["http://localhost:5173",process.env.BETTER_AUTH_URL,"https://qualitify.app","https://www.qualitify.app"],
     socialProviders:{
         google:{
             clientId:process.env.GOOGLE_CLIENT_ID,

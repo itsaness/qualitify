@@ -1,7 +1,7 @@
 import pool from "../database/db.js";
 import { metaCapi } from "../services/metaService.js";
 
-export let retryFailedOrders = async(req,res)=>{
+export let retryFailedOrdersController = async(req,res)=>{
     let userId=req.user.id;
     let order_number = req.params.order_number
     try{

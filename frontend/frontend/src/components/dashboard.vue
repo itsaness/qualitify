@@ -16,7 +16,7 @@ function handleRefresh() {
 
 /* ── Stats ────────────────────────────────────────────────────── */
 let statsCount = ref("");
-let getordersStats = async()=>{
+let getOrdersStats = async()=>{
   try{
     let response =await  fetch(`${import.meta.env.VITE_API_BASE_URL}/api/stats`,{
       method:"GET",
@@ -27,15 +27,20 @@ let getordersStats = async()=>{
       return;
     }
      statsCount.value=await response.json();
+     
+   
   }catch(err){
     console.error(err.message);
   }
 }
-const stats = ref([
-  { label: 'overviewPage.metrics.total',   value: statsCount.value.total_orders, color: '#3c90ff' },
-  { label: 'overviewPage.metrics.sent',    value: statsCount.value.successful_orders, color: '#4ae176' },
-  { label: 'overviewPage.metrics.failed',  value: statsCount.value.failed_order,    color: '#ffb4ab' },
-  { label: 'overviewPage.metrics.pending', value: statsCount.value.pending_orders,     color: '#f59e0b' },
+onMounted(()=>{
+  getOrdersStats();
+})
+const stats = computed(()=>[
+  { label: 'overviewPage.metrics.total',   value: statsCount.value?.stats?.total_orders, color: '#3c90ff' },
+  { label: 'overviewPage.metrics.sent',    value: statsCount.value?.stats?.successful_orders, color: '#4ae176' },
+  { label: 'overviewPage.metrics.failed',  value: statsCount.value?.stats?.failed_orders,    color: '#ffb4ab' },
+  { label: 'overviewPage.metrics.pending', value: statsCount.value?.stats?.pending_orders,     color: '#f59e0b' },
 ])
 
 /* ── Failed events ────────────────────────────────────────────── */
@@ -56,6 +61,10 @@ const getFailedOrders = async()=>{
         id: failedOrder.id, order: failedOrder.order_number, phone: failedOrder.customer_phone, error: failedOrder.meta_error,     status: 'idle', resolved: false
       })
      };
+
+     
+    
+     
   }catch(err){
     console.error(err.message);
   }
@@ -79,12 +88,12 @@ async function handleRetry(order_number) {
     if(!response.ok){
       return;
     }
-    for(let failedOrder of failedOrder.value){
-      if(failedOrder.order_number=order_number){
-       order.status='sending'
+    for(let failedOrder of failedOrders.value){
+      if(failedOrder.order_number==order_number){
+       failedOrder.status='sending'
         setTimeout(() => {
-    order.status   = 'dispatched'
-    order.resolved = true
+    failedOrder.status   = 'dispatched'
+    failedOrder.resolved = true
   }, 700)
       }
     }
@@ -97,7 +106,7 @@ async function handleRetry(order_number) {
  
 
  async function retryAll() {
-  for(failedOrder of failedOrders.value){
+  for(let failedOrder of failedOrders.value){
     if(!failedOrder.resolved){
       await handleRetry(failedOrder.order_number);
     }
@@ -109,9 +118,7 @@ function retryLabel(status) {
   if (status === 'dispatched') return 'overviewPage.tableActions.dispatched'
   return 'overviewPage.tableActions.retry'
 }
-onMounted(()=>{
-  getFailedOrders();
-})
+
 
 /* ── Countdown ────────────────────────────────────────────────── */
 const countdownSecs = ref(134)
@@ -123,10 +130,12 @@ const countdown = computed(() => {
 
 let timer = null
 onMounted(() => {
+   getFailedOrders();
+
   timer = setInterval(
     ()=>{
-   if(countdownSecs>0){
-    countdownSecs--;
+   if(countdownSecs.value>0){
+    countdownSecs.value--;
   }else{
     countdownSecs.value=123;
     retryAll();
@@ -268,17 +277,17 @@ watch(locale,(newVal)=>{
               </thead>
               <tbody>
                 <tr
-                  v-for="event in failedEvents"
-                  :key="event.id"
+                  v-for="failedEvent in failedEvents"
+                  :key="failedEvent.id"
                   class="table-row"
-                  :class="{ 'row--resolved': event.resolved }"
+                  :class="{ 'row--resolved': failedEvent.resolved }"
                 >
-                  <td class="td-order">{{ event.order }}</td>
-                  <td class="td-phone">{{ event.phone }}</td>
+                  <td class="td-order">{{ failedEvent.order }}</td>
+                  <td class="td-phone">{{ failedEvent.phone }}</td>
                   <td class="td-error">
-                    <div v-if="!event.resolved" class="error-cell">
+                    <div v-if="!failedEvent.resolved" class="error-cell">
                       <span class="error-dot" aria-hidden="true">•</span>
-                      <span>{{ event.error }}</span>
+                      <span>{{ failedEvent.error }}</span>
                     </div>
                     <span v-else class="acknowledged">{{ $t('overviewPage.errorList.statusAcknowledged') }}</span>
                   </td>
@@ -286,14 +295,14 @@ watch(locale,(newVal)=>{
                     <button
                       class="btn-retry"
                       :class="{
-                        'btn-retry--sending':    event.status === 'sending',
-                        'btn-retry--dispatched': event.status === 'dispatched',
+                        'btn-retry--sending':    failedEvent.status === 'sending',
+                        'btn-retry--dispatched': failedEvent.status === 'dispatched',
                       }"
-                      :disabled="event.status !== 'idle'"
-                      @click="handleRetry(event)"
+                      :disabled="failedEvent.status !== 'idle'"
+                      @click="handleRetry(failedEvent.order)"
                     >
-                      <span v-if="event.status === 'sending'" class="spin-char" aria-hidden="true">↻</span>
-                      <span>{{ $t(retryLabel(event.status)) }}</span>
+                      <span v-if="failedEvent.status === 'sending'" class="spin-char" aria-hidden="true">↻</span>
+                      <span>{{ $t(retryLabel(failedEvent.status)) }}</span>
                     </button>
                   </td>
                 </tr>
