@@ -462,30 +462,7 @@ watch(locale,(newVal)=>{
             </form>
           </section>
 
-          <!-- ── JS Snippet ────────────────────────────────── -->
-          <section class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h2 class="card-title">{{ $t('settingsPage.pluginsCard.title') }}</h2>
-                <span class="card-subtitle">{{ $t('settingsPage.pluginsCard.subtitle') }}</span>
-              </div>
-              <button class="btn-secondary btn-secondary--sm" type="button" @click="copySnippet">
-                <span class="material-symbols-outlined icon-15">content_copy</span>
-                <span>{{ snippetCopied ? $t('settingsPage.pluginsCard.copied') : $t('settingsPage.pluginsCard.copyBtn') }}</span>
-              </button>
-            </div>
-
-            <div class="snippet-stack">
-              <!--Shopify -->
-              <label class="field-label field-label--mono" for="carrier-select">{{ $t('settingsPage.pluginsCard.shopifyLabel') }}</label>
-              <div class="snippet-block">
-                <pre class="snippet-pre"><span class="s-outline">&lt;</span><span class="s-primary">script</span> <span class="s-variant">src</span>=<span class="s-tertiary">"https://cdn.s2stracker.io/v1/events.js"</span> <span class="s-variant">data-pixel</span>=<span class="s-tertiary">"849204918204912"</span> <span class="s-container">async</span><span class="s-outline">&gt;&lt;/</span><span class="s-primary">script</span><span class="s-outline">&gt;</span></pre>
-              </div>
-              <p class="field-hint">
-                {{ $t('settingsPage.pluginsCard.hint') }}
-              </p>
-            </div>
-          </section>
+        
 
         </div>
       </div>

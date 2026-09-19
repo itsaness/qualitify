@@ -60,7 +60,7 @@ function isActive(section) {
 }
 
 // Code snippets
-const codeOrderSnippet = `const res = await fetch('https://api.s2stracker.io/api/order', {
+const codeOrderSnippet = `const res = await fetch('https://api.qualitify.app/api/order', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const codeOrderSnippet = `const res = await fetch('https://api.s2stracker.io/api
 })`;
 
 const codeTrackingSnippet = `// POST /api/orders/ORD-00421/tracking
-await fetch('https://api.s2stracker.io/api/orders/ORD-00421/tracking', {
+await fetch('https://api.qualitify.app/api/orders/ORD-00421/tracking', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -243,7 +243,7 @@ watch(locale,(newVal)=>{
               <span class="nav-badge nav-badge--blue">{{ $t('docsPage.sidebar.badgeTrk') }}</span>
             </a>
             <a href="#endpoint-webhook" class="nav-item nav-item--mono" :class="{ 'nav-item--active': isActive('endpoint-webhook') }">
-              <span>POST /webhook/courier</span>
+              <span>POST /api/tracking/update</span>
               <span class="nav-badge nav-badge--amber">{{ $t('docsPage.sidebar.badgeManual') }}</span>
             </a>
           </nav>
@@ -436,7 +436,7 @@ watch(locale,(newVal)=>{
                 <div class="step-number">5</div>
                 <div class="step-text">
                   {{ $t('docsPage.content.credentials.carrier.step4a') }}
-                  <code class="inline-code">https://api.s2stracker.io/webhook/courier?sec=whsec_...</code>
+                  <code class="inline-code">https://api.qualitify.app/webhook/courier/?sec=whsec_...</code>
                 </div>
               </div>
               <div class="step-item">
@@ -759,7 +759,7 @@ watch(locale,(newVal)=>{
             </button>
           </div>
           <div class="code-body code-body--scroll">
-            <div><span class="c-indigo">const</span> res = <span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.s2stracker.io/api/order'</span>, {</div>
+            <div><span class="c-indigo">const</span> res = <span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.qualitify.app/api/order'</span>, {</div>
             <div>&nbsp;&nbsp;method: <span class="c-emerald-str">'POST'</span>,</div>
             <div>&nbsp;&nbsp;headers: {</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-emerald-str">'Content-Type'</span>: <span class="c-emerald-str">'application/json'</span>,</div>
@@ -814,7 +814,7 @@ watch(locale,(newVal)=>{
           </div>
           <div class="code-body code-body--scroll">
             <pre class="response-pre"><span class="c-muted">// POST /api/orders/ORD-00421/tracking</span>
-<span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.s2stracker.io/api/orders/ORD-00421/tracking'</span>, {
+<span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.qualitify.app/api/orders/ORD-00421/tracking'</span>, {
   method: <span class="c-emerald-str">'POST'</span>,
   headers: {
     <span class="c-emerald-str">'Content-Type'</span>: <span class="c-emerald-str">'application/json'</span>,

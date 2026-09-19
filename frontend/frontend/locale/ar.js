@@ -416,7 +416,7 @@ export default {
       pill: "بوابة Meta Conversions API (CAPI)",
       headline: "توقف عن خسارة المبيعات بسبب حظر البيكسل",
       sub: "تقوم Qualitify بإرسال أحداث Meta الخاصة بك من جهة الخادم — وداعاً لحظر الإعلانات، وقيود iOS، والتحويلات المفقودة.",
-      mockupUrl: "app.s2stracking.io/dashboard",
+      mockupUrl: "qualitify.app/dashboard",
       mockupLive: "نقل مباشر S2S"
     },
     specs: {
@@ -540,7 +540,7 @@ export default {
       pill: "بوابة Meta Conversions API (CAPI)",
       headline: "توقف عن خسارة المبيعات بسبب حظر البيكسل",
       sub: "تقوم Qualitify بإرسال أحداث Meta الخاصة بك من جهة الخادم — وداعاً لحظر الإعلانات، وقيود iOS، والتحويلات المفقودة.",
-      mockupUrl: "app.s2stracking.io/dashboard",
+      mockupUrl: "qualitify.app/dashboard",
       mockupLive: "نقل مباشر S2S"
     },
     specs: {
