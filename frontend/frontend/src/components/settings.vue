@@ -32,20 +32,27 @@ let getCredentials = async(provider)=>{
     }
     if(provider=="Meta"){
       metaCredentials.value=await response.json();
+      originalPixelId.value=metaCredentials.value.meta_pixel_id;
+      pixelId.value=metaCredentials.value.meta_pixel_id;
+      originalMetaToken.value=metaCredentials.value.meta_access_token;
+      metaToken.value=metaCredentials.value.meta_access_token;
     }else{
       credentials.value=await response.json();
+      yalidineWebhookSecret = credentials.value.webhook_secret;
+      originalYalidineWebhookSecret.value = credentials.value.webhook_secret;
+      
     }
   }catch(err){
     console.error(err.message);
   }
 }
-onMounted(()=>{
-  getCredentials("Meta");
-});
+
 
 /* ── Meta Config ──────────────────────────────────────────────── */
-const pixelId = computed(()=>metaCredentials.value?.meta_pixel_id);
-const metaToken = computed(()=>metaCredentials.value?.meta_access_token);
+const originalPixelId = ref("");
+const pixelId = ref("");
+const originalMetaToken = ref("");
+const metaToken = ref("");
 const metaTokenVisible = ref(false)
 const metaSaved = ref(false)
 
@@ -54,6 +61,16 @@ function toggleMetaToken() {
 }
 
 async function saveMetaConfig() {
+  let changedMetaCredentials = {};
+  if(pixelId.value != originalPixelId.value){
+    changedMetaCredentials.meta_pixel_id=pixelId.value;
+  }
+  if(metaToken.value != originalMetaToken.value){
+    changedMetaCredentials.meta_access_token=metaToken.value;
+  }
+  if(Object.keys(changedMetaCredentials).length==0){
+    return;
+  }
   let options = {
     method:"POST",
     headers:{
@@ -62,10 +79,7 @@ async function saveMetaConfig() {
     credentials:"include",
     body:JSON.stringify({
       provider:"Meta",
-      credentials:{
-         meta_pixel_id:pixelId.value,
-      meta_access_token:metaToken.value
-      }
+      credentials:changedMetaCredentials
     })
   };
   try{
@@ -79,6 +93,10 @@ async function saveMetaConfig() {
     console.error(err.message);
   }
 }
+onMounted(()=>{
+  getCredentials("Meta");
+});
+
 
 /* ── API Key ──────────────────────────────────────────────────── */
 const apiKeyDisplay = ref('s2s_live_••••••••••••••••••••')
@@ -112,7 +130,9 @@ async function  regenerateApiKey() {
 
 /* ── Express Integration ──────────────────────────────────────── */
 const selectedCarrier = ref('Yalidine');
-const webhookSecret = computed(()=>credentials.value?.webhook_secret);
+let yalidineWebhookSecret = ref("");
+let originalYalidineWebhookSecret = ref("");
+
 
 let webhookURL = computed(()=>{
   let token = credentials.value?.webhook_token;
@@ -155,6 +175,9 @@ async function createWebhookToken(){
 }
 
 async function saveExpressConfig() {
+  if(selectedCarrier.value == "Yalidine" && yalidineWebhookSecret.value == originalYalidineWebhookSecret.value){
+    return;
+  }
    let options = {
     method:"POST",
     headers:{
@@ -164,7 +187,7 @@ async function saveExpressConfig() {
     body:JSON.stringify({
       provider:selectedCarrier.value,
       credentials:{
-         webhook_secret:webhookSecret.value,
+         webhook_secret:yalidineWebhookSecret.value,
       }
     })
   };
@@ -328,6 +351,7 @@ watch(locale,(newVal)=>{
                     v-model="metaToken"
                     class="field-input field-input--mono"
                     :type="metaTokenVisible ? 'text' : 'password'"
+                    
                   />
                 </div>
                 <p class="field-hint">
@@ -428,7 +452,7 @@ watch(locale,(newVal)=>{
                   <div class="input-wrap">
                     <input
                       id="webhook-secret"
-                      v-model="webhookSecret"
+                      v-model="yalidineWebhookSecret"
                       class="field-input field-input--mono field-input--bordered"
                       :type="webhookSecretVisible ? 'text' : 'password'"
                     />

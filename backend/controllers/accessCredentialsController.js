@@ -29,7 +29,7 @@ export let accessCredentialsController = async(req,res)=>{
         let credentials = {};
         if(credentialsRes.rows[0].encrypted_credentials){
                  let decryptedString = decryptApiKey(credentialsRes.rows[0].encrypted_credentials);
-                  let credentials = JSON.parse(decryptedString);
+                credentials = JSON.parse(decryptedString);
         }
        
         let safePayload = {isConfigured:true};
