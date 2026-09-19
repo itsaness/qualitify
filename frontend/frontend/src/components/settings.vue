@@ -38,8 +38,8 @@ let getCredentials = async(provider)=>{
       metaToken.value=metaCredentials.value.meta_access_token;
     }else{
       credentials.value=await response.json();
-      yalidineWebhookSecret.value = credentials.value.webhook_secret;
-      originalYalidineWebhookSecret.value = credentials.value.webhook_secret;
+      yalidineWebhookSecret.value = credentials.value.webhook_secret ?? "";
+      originalYalidineWebhookSecret.value = credentials.value.webhook_secret ?? "";
       
     }
   }catch(err){
@@ -224,7 +224,8 @@ function copySnippet() {
 
 watch(selectedCarrier,(newVal)=>{
   credentials.value={isConfigured:false};
-  webhookURL.value="";
+  yalidineWebhookSecret.value="";
+  originalYalidineWebhookSecret.value="";
   getCredentials(newVal);
 },{immediate:true});
 /* i18n */
