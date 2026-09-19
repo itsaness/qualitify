@@ -21,12 +21,17 @@ export let accessCredentialsController = async(req,res)=>{
             return res.status(400).json({message:"seller profile not found"});
         }
         let sellerId = sellerRes.rows[0].id;
+     
         let credentialsRes = await pool.query("SELECT encrypted_credentials,webhook_token FROM seller_integrations WHERE seller_id=$1 AND provider_name=$2",[sellerId,provider]);
         if(credentialsRes.rows.length==0){
-            return res.status(400).json({message:"no credentials found"});
+            return res.status(400).json({isConfigured:false});
         }
-        let decryptedString = decryptApiKey(credentialsRes.rows[0].encrypted_credentials);
-        let credentials = JSON.parse(decryptedString);
+        let credentials = {};
+        if(credentialsRes.rows[0].encrypted_credentials){
+                 let decryptedString = decryptApiKey(credentialsRes.rows[0].encrypted_credentials);
+                  let credentials = JSON.parse(decryptedString);
+        }
+       
         let safePayload = {isConfigured:true};
         if(provider == "Yalidine"){
             safePayload.webhook_token=credentialsRes.rows[0].webhook_token;
