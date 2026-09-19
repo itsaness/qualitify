@@ -31,7 +31,7 @@ let getCredentials = async(provider)=>{
       return;
     }
     if(provider=="Meta"){
-      metaCredentials.value=await response.json
+      metaCredentials.value=await response.json();
     }else{
       credentials.value=await response.json();
     }
@@ -45,7 +45,7 @@ onMounted(()=>{
 
 /* ── Meta Config ──────────────────────────────────────────────── */
 const pixelId = computed(()=>metaCredentials.value?.meta_pixel_id);
-const metaToken = ref(()=>metCredentials.value?.meta_access_token);
+const metaToken = computed(()=>metaCredentials.value?.meta_access_token);
 const metaTokenVisible = ref(false)
 const metaSaved = ref(false)
 
