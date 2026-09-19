@@ -38,7 +38,7 @@ let getCredentials = async(provider)=>{
       metaToken.value=metaCredentials.value.meta_access_token;
     }else{
       credentials.value=await response.json();
-      yalidineWebhookSecret = credentials.value.webhook_secret;
+      yalidineWebhookSecret.value = credentials.value.webhook_secret;
       originalYalidineWebhookSecret.value = credentials.value.webhook_secret;
       
     }
