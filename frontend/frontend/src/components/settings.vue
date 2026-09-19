@@ -175,9 +175,6 @@ async function createWebhookToken(){
 }
 
 async function saveExpressConfig() {
-  if(selectedCarrier.value == "Yalidine" && yalidineWebhookSecret.value == originalYalidineWebhookSecret.value){
-    return;
-  }
    let options = {
     method:"POST",
     headers:{
@@ -194,11 +191,14 @@ async function saveExpressConfig() {
    
   try{
     if(selectedCarrier.value=="Yalidine"){
-       let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/credentials`,options);
+      if(yalidineWebhookSecret.value != originalYalidineWebhookSecret.value){
+         let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/credentials`,options);
     if(!response.ok){
       return;
     }
     }
+      }
+      
     if(!credentials.value.webhook_token){
      await createWebhookToken(); 
     }
