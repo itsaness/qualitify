@@ -12,7 +12,7 @@ let handleLogin = async()=>{
    errorMessage.value=null;
    await authClient.signIn.social({
     provider:"google",
-    callbackURL:"http://localhost:5173/dashboard"
+    callbackURL:"https://qualitify.app/dashboard"
    });
   }catch(err){
     errorMessage.value=err.message;
