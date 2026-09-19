@@ -201,6 +201,7 @@ function copySnippet() {
 
 watch(selectedCarrier,(newVal)=>{
   credentials.value={isConfigured:false};
+  webhookURL.value="";
   getCredentials(newVal);
 },{immediate:true});
 /* i18n */
