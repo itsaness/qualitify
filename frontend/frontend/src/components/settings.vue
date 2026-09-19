@@ -199,7 +199,10 @@ function copySnippet() {
   })
 }
 
-watch(selectedCarrier,getCredentials,{immediate:true});
+watch(selectedCarrier,(newVal)=>{
+  credentials.value={isConfigured:false};
+  getCredentials(newVal);
+},{immediate:true});
 /* i18n */
 import { useI18n } from 'vue-i18n';
 import {Globe} from "lucide-vue-next";
