@@ -133,8 +133,8 @@ watch(locale,(newVal)=>{
             <div class="channel-icon">📧</div>
             <div class="channel-info">
               <div class="channel-type">{{ $t('contact.channels.email') }}</div>
-              <a href="mailto:support@s2stracking.com" class="channel-value channel-value--link">
-                support@s2stracking.com
+              <a href="mailto:support@qualitify.app" class="channel-value channel-value--link">
+                support@qualitify.app
               </a>
             </div>
           </div>
@@ -147,7 +147,7 @@ watch(locale,(newVal)=>{
                 <span class="channel-type">{{ $t('contact.channels.whatsapp') }}</span>
                 <span class="badge-preferred">{{ $t('contact.channels.preferred') }}</span>
               </div>
-              <div class="channel-value">+213 XX XX XX XX</div>
+              <div class="channel-value">+213 555 62 40 31</div>
             </div>
           </div>
 

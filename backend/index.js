@@ -20,7 +20,7 @@ import maystroWebhookRoute from "./routes/maystroWebhookRoute.js";
 import ayorWebhookRoute from "./routes/ayorWebhookRoute.js";
 let app = express();
 const originOptions = {
-    origin:['http://localhost:3000','http://localhost:5173',"https://qualitify.app","https://www.qualitify.app"],
+    origin:["http://localhost:5173","https://qualitify.app","https://www.qualitify.app"],
     methods:["GET","POST","PUT","DELETE","OPTIONS"],
     allowedHeaders:["Content-Type","Authorization"],
     credentials:true
