@@ -22,6 +22,6 @@ export async function webhookTokenController(req,res){
       await pool.query("INSERT INTO seller_integrations (seller_id,provider_name,webhook_token) VALUES ($1,$2,$3) ON CONFLICT (seller_id,provider_name) DO UPDATE SET webhook_token=EXCLUDED.webhook_token",[sellerId,provider,webhook_token])
       return res.status(200).json({message:"Webhook token created.",webhook_token:`${webhook_token}`});
     }catch(err){
-return res.status(500).json({message:"Internal server error"});    }
+return res.status(500).json({message:err.message});    }
 
 }
