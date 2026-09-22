@@ -102,7 +102,7 @@ export default {
       pill: "Meta Conversions API (CAPI) Gateway",
       headline: "Stop Losing Sales to Blocked Pixels",
       sub: "Qualitify sends your Meta events server-side — no ad blockers, no iOS restrictions, no missed conversions.",
-      mockupUrl: "app.s2stracking.io/dashboard",
+      mockupUrl: "qualitify.app/dashboard",
       mockupLive: "LIVE S2S"
     },
     specs: {

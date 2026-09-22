@@ -16,8 +16,8 @@ export const generateCheckout = async (amount,planId,userId)=>{
   body: JSON.stringify({
     amount: amount,
     currency: 'dzd',
-    success_url: 'http://localhost:5173/dashboard',
-    failure_url:'https://localhost:5173/checkout',
+    success_url: 'https://qualitify.app/dashboard',
+    failure_url:'https://qualitify.app/pricing',
     metadata:
         {
            userId,
@@ -27,7 +27,7 @@ export const generateCheckout = async (amount,planId,userId)=>{
   })
 };
 try{
-    let result = await fetch('https://pay.chargily.net/test/api/v2/checkouts', options);
+    let result = await fetch('https://pay.chargily.net/api/v2/checkouts', options);
     let data = await result.json();
     if(!result.ok){
         throw new Error(data.message||"Failed to create chargily checkout");

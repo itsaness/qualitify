@@ -644,8 +644,9 @@ watch(locale,(newVal)=>{
                     <td class="c-muted mono">string</td>
                     <td class="c-emerald">{{ $t('docsPage.table.reqYes') }}</td>
                     <td>
-                      <code class="inline-code">yalidine</code> /
-                      <code class="inline-code">maystro</code>
+                      <code class="inline-code">Ayor</code> /
+                      <code class="inline-code">Zr-express</code> 
+                      
                     </td>
                   </tr>
                 </tbody>

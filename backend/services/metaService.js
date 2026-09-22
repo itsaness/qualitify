@@ -3,6 +3,7 @@
  import { hashPhone } from "./hashPhoneService.js";
  import { decryptApiKey } from "./apiKeyService.js";
  import crypto from "crypto";
+ import "dotenv/config";
 function hashString(str){
     if(!str) return undefined;
    return crypto.createHash('sha256').update(str.trim().toLowerCase()).digest("hex")
@@ -107,7 +108,7 @@ function hashString(str){
     }
     let encryptedCredentials = decryptApiKey(credentialsRes.rows[0].encrypted_credentials)
     let credentials = JSON.parse(encryptedCredentials);
-    let result = await fetch(`https://graph.facebook.com/v22.0/${credentials.meta_pixel_id}/events?access_token=${credentials.meta_access_token}`,options);
+    let result = await fetch(`https://graph.facebook.com/${process.env.META_GRAPH_VERSION}/${credentials.meta_pixel_id}/events?access_token=${credentials.meta_access_token}`,options);
     let metaResponse = await result.json();
     if(!result.ok){
         await pool.query("UPDATE ORDERS SET meta_status='failure',meta_sent_at=NOW(),meta_error=$1 WHERE order_number=$2",[metaResponse.error?.message,order.order_number]);

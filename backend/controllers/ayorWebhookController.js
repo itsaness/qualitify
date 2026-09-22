@@ -1,12 +1,13 @@
 import pool from "../database/db.js";
 import { metaCapi } from "../services/metaService.js";
+import { getSellerById } from "../services/sellerApiService.js";
 
 export let ayorWebhookController = async(req,res)=>{
     let webhook_token = req.params.webhook_token;
 
     try{
         let sellerRes = await pool.query("SELECT seller_id FROM seller_integrations WHERE webhook_token=$1",[webhook_token]);
-        let seller = await getSellerById(sellerRes.rows[0].id);
+        let seller = await getSellerById(sellerRes.rows[0].seller_id);
         if(!seller){
             return res.status(200).json({message:"Seller profile not found"});
         }
@@ -20,7 +21,7 @@ export let ayorWebhookController = async(req,res)=>{
             return;
         }
         let eventType = req.body.message.attributes.event_type;
-        let decodedString = Buffer.from(req.body.data,base64).toString("utf-8");
+        let decodedString = Buffer.from(req.body.message.data,"base64").toString("utf-8");
         let payload = JSON.parse(decodedString);
 
         const order_number = payload.order_id;
@@ -41,7 +42,7 @@ export let ayorWebhookController = async(req,res)=>{
                     fbc = fbcField.value;
                 }
             }
-            await pool.query("INSERT INTO orders (seller_id,order_number,amount,customer_phone,fbp,fbc,first_name,commune,wilaya) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",[sellerId,order_number,amount,phone,fbp,fbc,first_name,commune,wilaya,]);
+            await pool.query("INSERT INTO orders (seller_id,order_number,amount,customer_phone,fbp,fbc,first_name,commune,wilaya) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",[sellerId,order_number,amount,phone,fbp,fbc,first_name,commune,wilaya]);
 
         }
         if(eventType=="order.delivered"){

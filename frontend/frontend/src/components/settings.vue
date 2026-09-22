@@ -129,7 +129,7 @@ async function  regenerateApiKey() {
 }
 
 /* ── Express Integration ──────────────────────────────────────── */
-const selectedCarrier = ref('Yalidine');
+const selectedCarrier = ref('Ayor');
 let yalidineWebhookSecret = ref("");
 let originalYalidineWebhookSecret = ref("");
 
@@ -429,8 +429,6 @@ watch(locale,(newVal)=>{
                 <label class="field-label field-label--mono" for="carrier-select">{{ $t('settingsPage.expressCard.carrierLabel') }}</label>
                 <div class="select-wrap">
                   <select id="carrier-select" v-model="selectedCarrier" class="field-select">
-                    <option value="Yalidine">Yalidine</option>
-                    <option value="Maystro">Maystro</option>
                     <option value="Ayor">Ayor</option>
                   </select>
                   <span class="material-symbols-outlined select-arrow">expand_more</span>
