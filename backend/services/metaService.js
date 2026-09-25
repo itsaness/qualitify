@@ -16,11 +16,13 @@ function hashString(str){
      if(!seller){
         throw new Error("Missing Seller Data.");
      }
-    let userData = {
-        client_ip_address:order.client_ip,
-        ph:[hashPhone(order.customer_phone)],
+    let userData = {};
+    if(order.client_ip){
+        userData.client_ip_address=order.client_ip;
     }
-
+    if(order.customer_phone){
+        userData.ph=[hashPhone(order.customer_phone)];
+    }
     if(order.fbp){
         userData.fbp=order.fbp
     }
@@ -44,7 +46,10 @@ function hashString(str){
     }
     let customData ={
  currency:order.currency,
-                value:parseFloat(order.amount)
+    
+    }
+    if(order.amount){
+        customData.value=order.amount;
     }
     /* product_list */
     if(order.product_list){
@@ -81,7 +86,7 @@ function hashString(str){
     const capiPayload = {
         data:[{
             event_name:'Purchase',
-            event_time:Math.floor(Date.now()/1000),
+            event_time:order.created_at ? Math.floor(new Date(order.created_at).getTime()/1000):Math.floor(Date.now()/1000),
             action_source:'website',
             event_id:order.order_number,
             user_data:userData,
@@ -108,7 +113,7 @@ function hashString(str){
     }
     let encryptedCredentials = decryptApiKey(credentialsRes.rows[0].encrypted_credentials)
     let credentials = JSON.parse(encryptedCredentials);
-    let result = await fetch(`https://graph.facebook.com/${process.env.META_GRAPH_VERSION}/${credentials.meta_pixel_id}/events?access_token=${credentials.meta_access_token}`,options);
+    let result = await fetch(`https://graph.facebook.com/${process.env.META_GRAPH_VERSION}/${credentials.meta_pixel_id}/events?access_token=${credentials.meta_access_token}`,{...options,signal:AbortSignal.timeout(10_000)});
     let metaResponse = await result.json();
     if(!result.ok){
         await pool.query("UPDATE ORDERS SET meta_status='failure',meta_sent_at=NOW(),meta_error=$1 WHERE order_number=$2",[metaResponse.error?.message,order.order_number]);
@@ -121,7 +126,12 @@ function hashString(str){
 
 
      }catch(err){
-       await pool.query("UPDATE ORDERS SET meta_status='failure',meta_sent_at=NOW(),meta_error=$1 WHERE order_number=$2",[err.message,order.order_number]);
+        try{
+               await pool.query("UPDATE ORDERS SET meta_status='failure',meta_sent_at=NOW(),meta_error=$1 WHERE order_number=$2",[err.message,order.order_number]);
+
+        }catch(dbErr){
+            console.error("failed to write meta error to db for order:",order.order_number);
+        } 
        return ({success:false,error:err.message});
     }
     

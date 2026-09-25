@@ -430,6 +430,7 @@ watch(locale,(newVal)=>{
                 <div class="select-wrap">
                   <select id="carrier-select" v-model="selectedCarrier" class="field-select">
                     <option value="Ayor">Ayor</option>
+                    <option value="Maystro">Maystro</option>
                   </select>
                   <span class="material-symbols-outlined select-arrow">expand_more</span>
                 </div>

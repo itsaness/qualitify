@@ -645,7 +645,7 @@ watch(locale,(newVal)=>{
                     <td class="c-emerald">{{ $t('docsPage.table.reqYes') }}</td>
                     <td>
                       <code class="inline-code">Ayor</code> /
-                      <code class="inline-code">Zr-express</code> 
+                      <code class="inline-code">Maystro</code> 
                       
                     </td>
                   </tr>
