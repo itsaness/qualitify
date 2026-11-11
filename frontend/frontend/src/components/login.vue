@@ -5,14 +5,14 @@ import { ref } from 'vue';
 let isLoading=ref(false);
 let errorMessage=ref(null);
 const router = useRouter()
-
+let FRONTEND_URL = process.meta.env.VITE_API_FRONTEND_URL;
 let handleLogin = async()=>{
   try{
    isLoading.value=true;
    errorMessage.value=null;
    await authClient.signIn.social({
     provider:"google",
-    callbackURL:"https://qualitify.app/dashboard"
+    callbackURL:`${FRONTEND_URL}/dashboard`
    });
   }catch(err){
     errorMessage.value=err.message;

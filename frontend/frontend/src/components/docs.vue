@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
 import { watch } from 'vue';
-
+let BASE_URL=import.meta.env.VITE_API_BASE_URL;
 const isLargeScreen = useMediaQuery('(min-width:768px)');
 const menuOpen = ref(false);
 const activeSection = ref('overview');
@@ -60,7 +60,7 @@ function isActive(section) {
 }
 
 // Code snippets
-const codeOrderSnippet = `const res = await fetch('https://api.qualitify.app/api/order', {
+const codeOrderSnippet = `const res = await fetch('https://${BASE_URL}/api/order', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const codeOrderSnippet = `const res = await fetch('https://api.qualitify.app/api
 })`;
 
 const codeTrackingSnippet = `// POST /api/orders/ORD-00421/tracking
-await fetch('https://api.qualitify.app/api/orders/ORD-00421/tracking', {
+await fetch('https://${BASE_URL}/api/orders/ORD-00421/tracking', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -436,7 +436,7 @@ watch(locale,(newVal)=>{
                 <div class="step-number">5</div>
                 <div class="step-text">
                   {{ $t('docsPage.content.credentials.carrier.step4a') }}
-                  <code class="inline-code">https://api.qualitify.app/webhook/courier/?sec=whsec_...</code>
+                  <code class="inline-code">https://{{BASE_URL}}/webhook/courier/?sec=whsec_...</code>
                 </div>
               </div>
               <div class="step-item">
@@ -760,7 +760,7 @@ watch(locale,(newVal)=>{
             </button>
           </div>
           <div class="code-body code-body--scroll">
-            <div><span class="c-indigo">const</span> res = <span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.qualitify.app/api/order'</span>, {</div>
+            <div><span class="c-indigo">const</span> res = <span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://{{BASE_URL}}/api/order'</span>, {</div>
             <div>&nbsp;&nbsp;method: <span class="c-emerald-str">'POST'</span>,</div>
             <div>&nbsp;&nbsp;headers: {</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-emerald-str">'Content-Type'</span>: <span class="c-emerald-str">'application/json'</span>,</div>
@@ -815,7 +815,7 @@ watch(locale,(newVal)=>{
           </div>
           <div class="code-body code-body--scroll">
             <pre class="response-pre"><span class="c-muted">// POST /api/orders/ORD-00421/tracking</span>
-<span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://api.qualitify.app/api/orders/ORD-00421/tracking'</span>, {
+<span class="c-indigo">await</span> fetch(<span class="c-emerald-str">'https://{{BASE_URL}}/api/orders/ORD-00421/tracking'</span>, {
   method: <span class="c-emerald-str">'POST'</span>,
   headers: {
     <span class="c-emerald-str">'Content-Type'</span>: <span class="c-emerald-str">'application/json'</span>,

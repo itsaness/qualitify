@@ -16,8 +16,8 @@ export const generateCheckout = async (amount,planId,userId)=>{
   body: JSON.stringify({
     amount: amount,
     currency: 'dzd',
-    success_url: 'https://qualitify.app/dashboard',
-    failure_url:'https://qualitify.app/pricing',
+    success_url:`https://${process.env.FRONTEND_URL}/dashboard`,
+    failure_url:'https://${process.env.FRONTEND_URL}/pricing',
     metadata:
         {
            userId,
